@@ -49,5 +49,11 @@ Fase atual: 3 (referências e perfil) · Atualizado em 2026-11-12
 ## Skills escritas (série)
 - [x] `minhas-skills/serie-animada/SKILL.md`: skill mestra da série, com as etapas, os tipos de tomada e as armadilhas.
 
+## Visual v02 (ela pediu: "está muito igual ao original, diferencia um pouco")
+- Personagens de cabeça quadrada arredondada, olhos ovais, sobrancelhas; Davi de boné e avental verde-azulados; Seu Jair de jaqueta marrom.
+- Loja lilás com faixa rosa, balcão roxo, luz rosa; placas amarelas; visor âmbar; monitor azulado; celular roxo.
+- HUD em etiqueta de preço amarela com relógio digital; legenda em caixa escura com o nome de quem fala.
+- História, falas e vozes iguais à v01. Entregas: `serie/turno-da-noite/entregas/turno-da-noite_epNN_v02.mp4`.
+
 ## Próximo passo
-Ela assiste aos 4 episódios v01 e pede as correções (voz, ritmo, visual). Eu não ouvi o áudio nem assisti ao movimento: conferi por quadros parados e por medições.
+Ela assiste aos 4 episódios v02 e pede as correções (voz, ritmo, visual). Eu não ouvi o áudio nem assisti ao movimento: conferi por quadros parados e por medições.
