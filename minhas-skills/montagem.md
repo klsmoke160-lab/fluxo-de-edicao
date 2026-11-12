@@ -32,7 +32,12 @@ Fase atual: 3 (referências e perfil) · Atualizado em 2026-11-12
 
 ## Série
 - Projeto em `serie/turno-da-noite/` (Three.js + `render.cjs`, que tira um quadro por vez no Chromium e monta o MP4 com FFmpeg).
-- Teste visual v01 (12 s, 720×1280, 30 fps, sem áudio): `serie/turno-da-noite/entregas/teste-visual_v01.mp4`. Aguardando a aprovação dela.
+- Teste visual v01 (12 s, 720×1280, 30 fps, sem áudio): `serie/turno-da-noite/entregas/teste-visual_v01.mp4`. **Visual aprovado por ela** ("está no caminho certo").
+
+## História
+- Regra pedida por ela: o Davi nunca vê ele mesmo. O vulto não é o Davi, e o Davi não aparece no monitor.
+- Final escolhido (EP 4): o corredor 3 não existe. O Davi conta só dois corredores; a CAM 03 mostra o vulto andando até o caixa; a loja está vazia.
+- Roteiro v01 dos 4 episódios em `serie/turno-da-noite/roteiro.md`. Aguardando a aprovação dela.
 
 ## Próximo passo
-Ela aprova ou corrige o visual do teste. Depois: escolher o serviço de voz de IA, escrever o roteiro dos 4 episódios e montar o fluxo de etapas da série.
+Ela aprova ou corrige o roteiro e diz qual serviço de voz de IA vai usar (já perguntado duas vezes, sem resposta). Depois: produzir o EP 01 e montar o fluxo de etapas da série.
