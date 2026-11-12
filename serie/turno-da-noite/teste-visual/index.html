@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Turno da Noite · teste visual</title>
+<style>
+@font-face{font-family:Montserrat;font-weight:800;src:url(/node_modules/@fontsource/montserrat/files/montserrat-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Montserrat;font-weight:900;src:url(/node_modules/@fontsource/montserrat/files/montserrat-latin-900-normal.woff2) format("woff2")}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:720px;height:1280px;overflow:hidden;font-family:Montserrat,sans-serif}
+#c{position:absolute;inset:0;width:720px;height:1280px;display:block}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,rgba(6,9,24,.06) 34%,rgba(6,9,24,.74) 100%);pointer-events:none}
+#dim{position:absolute;inset:0;background:#04060f;opacity:0;pointer-events:none}
+#hud{position:absolute;left:46px;top:158px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.55)}
+#hud .l1{font-weight:900;font-size:25px;letter-spacing:.4px}
+#hud .l2{font-weight:800;font-size:16px;margin-top:3px;margin-left:1px}
+#hud .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3b3b;margin-right:7px;vertical-align:1px}
+#cap{position:absolute;left:60px;right:60px;top:838px;text-align:center;font-weight:800;font-size:31px;line-height:1.22;
+  color:#fff;-webkit-text-stroke:7px #14141a;paint-order:stroke fill;text-shadow:0 3px 8px rgba(0,0,0,.5)}
+</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c" width="720" height="1280"></canvas>
+  <div id="vig"></div>
+  <div id="dim"></div>
+  <div id="hud"><div class="l1">TURNO DA NOITE · EP 01</div><div class="l2"><span class="dot"></span>TERÇA · 02:47</div></div>
+  <div id="cap"></div>
+</div>
+<script type="module" src="./cena.js"></script>
+</body>
+</html>
