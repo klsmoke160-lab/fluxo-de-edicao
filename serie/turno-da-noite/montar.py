@@ -26,11 +26,11 @@ SFX = {
     "notif":    ("0.3*sin(2*PI*880*t)*lt(t,0.09)+0.3*sin(2*PI*1320*t)*gte(t,0.09)*exp(-12*(t-0.09))", 0.45, None),
     "sino":     ("0.4*sin(2*PI*1568*t)*exp(-4*t)+0.4*sin(2*PI*1245*max(t-0.28,0))*exp(-4*max(t-0.28,0))*gte(t,0.28)", 1.4, None),
     "ding":     ("0.5*sin(2*PI*2093*t)*exp(-3*t)+0.25*sin(2*PI*4186*t)*exp(-5*t)+0.12*sin(2*PI*6270*t)*exp(-8*t)", 2.4, None),
-    "impacto":  ("0.9*sin(2*PI*(38+50*exp(-6*t))*t)*exp(-2.2*t)+0.2*(random(0)*2-1)*exp(-9*t)", 2.4, "lowpass=f=900"),
+    "impacto":  ("0.5*sin(2*PI*(38+50*exp(-6*t))*t)*exp(-2.2*t)+0.2*(random(0)*2-1)*exp(-9*t)", 2.4, "lowpass=f=900"),
     "estatica": ("0.3*(random(0)*2-1)", 0.18, "highpass=f=1500"),
     "chiado":   ("0.2*(random(0)*2-1)*min(1,t/2.5)", 4.5, "highpass=f=900,lowpass=f=5000"),
-    "passos":   ("0.7*sin(2*PI*85*mod(t,0.5))*exp(-38*mod(t,0.5))+0.1*(random(0)*2-1)*exp(-60*mod(t,0.5))", 3.0, "lowpass=f=1200"),
-    "passos_rapidos": ("0.7*sin(2*PI*85*mod(t,0.3))*exp(-38*mod(t,0.3))+0.1*(random(0)*2-1)*exp(-60*mod(t,0.3))", 2.4, "lowpass=f=1200"),
+    "passos":   ("0.42*sin(2*PI*85*mod(t,0.5))*exp(-38*mod(t,0.5))+0.1*(random(0)*2-1)*exp(-60*mod(t,0.5))", 3.0, "lowpass=f=1200"),
+    "passos_rapidos": ("0.42*sin(2*PI*85*mod(t,0.3))*exp(-38*mod(t,0.3))+0.1*(random(0)*2-1)*exp(-60*mod(t,0.3))", 2.4, "lowpass=f=1200"),
     "pisca":    ("0.2*sin(2*PI*100*t)*sgn(sin(2*PI*50*t))*(lt(t,0.08)+between(t,0.22,0.4)+between(t,0.54,0.6)+gte(t,0.85))", 1.3, "lowpass=f=2500"),
     "impressora": ("0.28*(random(0)*2-1)*gt(sin(2*PI*14*t),0)*lt(t,1.6)", 1.7, "bandpass=f=2200:w=1800"),
     "desligado": ("0.25*sin(2*PI*425*t)*lt(mod(t,0.5),0.25)", 1.5, None),
@@ -103,9 +103,9 @@ def cmd_vozes(ep):
 
 def gerar_sfx(nome):
     pasta = os.path.join(RAIZ, "saida", "sfx"); os.makedirs(pasta, exist_ok=True)
-    arq = os.path.join(pasta, nome + ".wav")
+    expr, d, filtro = SFX[nome]
+    arq = os.path.join(pasta, nome + "_" + hashlib.sha1(repr(SFX[nome]).encode()).hexdigest()[:8] + ".wav")
     if not os.path.exists(arq):
-        expr, d, filtro = SFX[nome]
         af = (filtro + "," if filtro else "") + f"afade=t=out:st={max(0, d - 0.04):.3f}:d=0.04"
         sh(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", f"aevalsrc='{expr}':d={d}:s={SR}", "-af", af, "-ac", "1", arq])
     return arq
@@ -121,8 +121,8 @@ def cmd_audio(ep):
     entradas = ["-i", video,
                 # ambiente: ar da loja + zumbido das lâmpadas + um grave que cresce até o fim
                 "-f", "lavfi", "-i", f"aevalsrc='0.05*(random(0)*2-1)':d={D}:s={SR}",
-                "-f", "lavfi", "-i", f"aevalsrc='0.012*sin(2*PI*120*t)+0.006*sin(2*PI*240*t)+(0.03+0.06*t/{D})*(sin(2*PI*55*t)+sin(2*PI*58.2*t))*(0.75+0.25*sin(2*PI*0.13*t))':d={D}:s={SR}"]
-    grafo = [f"[1:a]lowpass=f=420,volume=0.5[ar]", f"[ar][2:a]amix=inputs=2:normalize=0,afade=t=out:st={fim_amb:.2f}:d=1.0[amb]"]
+                "-f", "lavfi", "-i", f"aevalsrc='0.004*sin(2*PI*120*t)+0.002*sin(2*PI*240*t)+(0.008+0.02*t/{D})*(sin(2*PI*55*t)+sin(2*PI*58.2*t))*(0.75+0.25*sin(2*PI*0.13*t))':d={D}:s={SR}"]
+    grafo = [f"[1:a]lowpass=f=420,volume=0.3[ar]", f"[ar][2:a]amix=inputs=2:normalize=0,afade=t=out:st={fim_amb:.2f}:d=1.0[amb]"]
     rotulos, n = ["[amb]"], 3
     for x, s in zip(tl["tomadas"], dados["tomadas"]):
         if x["voz"]:
@@ -134,7 +134,7 @@ def cmd_audio(ep):
             quando = (x["fim"] + u) if u < 0 else (x["ini"] + u)
             entradas += ["-i", gerar_sfx(nome)]
             grafo.append(f"[{n}:a]volume={ganho}dB,adelay={int(max(0, quando) * 1000)}:all=1[a{n}]"); rotulos.append(f"[a{n}]"); n += 1
-    grafo.append("".join(rotulos) + f"amix=inputs={len(rotulos)}:normalize=0:duration=longest,atrim=0:{D},alimiter=limit=0.95,loudnorm=I=-16:TP=-1.5:LRA=11,aresample={SR}[mix]")
+    grafo.append("".join(rotulos) + f"amix=inputs={len(rotulos)}:normalize=0:duration=longest,atrim=0:{D},volume=3dB,alimiter=limit=0.8:level=disabled,aresample={SR}[mix]")
     os.makedirs(os.path.join(RAIZ, "entregas"), exist_ok=True)
     saida = os.path.join(RAIZ, "entregas", f"turno-da-noite_{ep}_{VERSAO}.mp4")
     sh(["ffmpeg", "-v", "error", "-y", *entradas, "-filter_complex", ";".join(grafo), "-map", "0:v", "-map", "[mix]",
