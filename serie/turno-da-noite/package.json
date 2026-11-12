@@ -3,7 +3,8 @@
   "private": true,
   "description": "Série animada Turno da Noite: cenas em Three.js renderizadas em MP4",
   "dependencies": {
-    "three": "0.170.0",
-    "@fontsource/montserrat": "5.1.0"
+    "@fontsource/montserrat": "5.1.0",
+    "@fontsource/rubik": "^5.1.0",
+    "three": "0.170.0"
   }
 }

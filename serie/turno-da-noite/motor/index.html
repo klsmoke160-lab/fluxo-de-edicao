@@ -7,34 +7,41 @@
 @font-face{font-family:Montserrat;font-weight:600;src:url(/node_modules/@fontsource/montserrat/files/montserrat-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:Montserrat;font-weight:800;src:url(/node_modules/@fontsource/montserrat/files/montserrat-latin-800-normal.woff2) format("woff2")}
 @font-face{font-family:Montserrat;font-weight:900;src:url(/node_modules/@fontsource/montserrat/files/montserrat-latin-900-normal.woff2) format("woff2")}
+@font-face{font-family:Rubik;font-weight:600;src:url(/node_modules/@fontsource/rubik/files/rubik-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Rubik;font-weight:800;src:url(/node_modules/@fontsource/rubik/files/rubik-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Rubik;font-weight:900;src:url(/node_modules/@fontsource/rubik/files/rubik-latin-900-normal.woff2) format("woff2")}
 html,body{margin:0;background:#000}
-#stage{position:relative;width:720px;height:1280px;overflow:hidden;font-family:Montserrat,sans-serif;background:#000}
+#stage{position:relative;width:720px;height:1280px;overflow:hidden;font-family:Rubik,sans-serif;background:#000}
 #c{position:absolute;inset:0;width:720px;height:1280px;display:block}
-#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,rgba(6,9,24,.06) 34%,rgba(6,9,24,.74) 100%);pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,rgba(16,6,30,.06) 34%,rgba(16,6,30,.76) 100%);pointer-events:none}
 #dim{position:absolute;inset:0;background:#04060f;opacity:0;pointer-events:none}
-#hud{position:absolute;left:46px;top:158px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.55)}
-#hud .l1{font-weight:900;font-size:25px;letter-spacing:.4px}
-#hud .l2{font-weight:800;font-size:16px;margin-top:3px;margin-left:1px}
-#hud .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3b3b;margin-right:7px;vertical-align:1px}
-#cap{position:absolute;left:54px;right:54px;top:838px;text-align:center;font-weight:800;font-size:31px;line-height:1.22;
-  color:#fff;-webkit-text-stroke:7px #14141a;paint-order:stroke fill;text-shadow:0 3px 8px rgba(0,0,0,.5)}
+#hud{position:absolute;left:38px;top:150px}
+#hud .tag{position:relative;background:#ffd400;color:#16130a;border-radius:10px;padding:9px 18px 9px 40px;transform:rotate(-3deg);box-shadow:0 5px 0 rgba(0,0,0,.35);display:inline-block}
+#hud .tag:before{content:"";position:absolute;left:14px;top:50%;width:13px;height:13px;margin-top:-7px;border-radius:50%;background:#16130a}
+#hud .t1{font-weight:800;font-size:14px;letter-spacing:1.6px}
+#hud .t2{font-weight:900;font-size:35px;line-height:.95;letter-spacing:.5px}
+#hud .rel{display:inline-block;margin:14px 0 0 6px;background:#120d1c;color:#ff4f6a;font-weight:800;font-size:19px;letter-spacing:2.5px;padding:5px 11px;border-radius:7px;box-shadow:inset 0 0 0 2px #2c2140}
+#cap{position:absolute;left:50%;top:826px;transform:translateX(-50%);width:max-content;max-width:600px;display:none;text-align:left;
+  background:rgba(18,13,28,.88);border-radius:16px;padding:26px 24px 17px;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+#cap .quem{position:absolute;left:18px;top:-15px;color:#16130a;font-weight:900;font-size:16px;letter-spacing:1.5px;padding:4px 11px;border-radius:8px}
+#cap .txt{display:block;color:#fff;font-weight:600;font-size:29px;line-height:1.24}
 #fim{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;
-  font-weight:900;font-size:34px;line-height:1.35;letter-spacing:.5px;padding:0 70px}
-#fim small{display:block;font-weight:800;font-size:19px;color:#ff5a5a;margin-top:14px;letter-spacing:2px}
+  font-weight:900;font-size:36px;line-height:1.35;letter-spacing:.5px;padding:0 70px}
+#fim small{display:block;font-weight:800;font-size:19px;color:#ffd400;margin-top:14px;letter-spacing:2px}
 
 /* Celular (tomadas "celular") */
 #fone{position:absolute;left:150px;top:470px;width:420px;height:800px;display:none}
 #fone .corpo{position:absolute;inset:0;border-radius:54px;background:#101114;box-shadow:0 30px 60px rgba(0,0,0,.6)}
-#fone .tela{position:absolute;left:14px;top:14px;right:14px;bottom:14px;border-radius:42px;background:#ece5dd;overflow:hidden}
+#fone .tela{position:absolute;left:14px;top:14px;right:14px;bottom:14px;border-radius:42px;background:#efeaf7;overflow:hidden}
 #fone .ilha{position:absolute;left:50%;top:26px;width:110px;height:26px;margin-left:-55px;border-radius:14px;background:#101114;z-index:3}
 #fone .dedo{position:absolute;bottom:-40px;width:150px;height:330px;border-radius:75px;z-index:4;box-shadow:inset 0 0 0 5px rgba(22,17,15,.85)}
 #fone .dedo.e{left:-78px;transform:rotate(14deg)} #fone .dedo.d{right:-78px;transform:rotate(-14deg)}
-.zap .topo{height:118px;background:#1f6f5c;color:#fff;padding:60px 26px 0;box-sizing:border-box;display:flex;gap:14px;align-items:center}
+.zap .topo{height:118px;background:#5b3fa0;color:#fff;padding:60px 26px 0;box-sizing:border-box;display:flex;gap:14px;align-items:center}
 .zap .av{width:44px;height:44px;border-radius:50%;background:#cfd8d4;flex:none}
 .zap .nome{font-weight:800;font-size:22px;line-height:1.1} .zap .sub{font-weight:600;font-size:14px;opacity:.85}
 .zap .msgs{padding:22px 18px;display:flex;flex-direction:column;gap:12px}
 .zap .b{max-width:300px;padding:12px 16px 20px;border-radius:16px;background:#fff;font-weight:600;font-size:21px;line-height:1.25;color:#17191c;position:relative;box-shadow:0 1px 2px rgba(0,0,0,.18);align-self:flex-start;transform-origin:0 100%}
-.zap .b.eu{align-self:flex-end;background:#d9fdd3;transform-origin:100% 100%}
+.zap .b.eu{align-self:flex-end;background:#e2d6ff;transform-origin:100% 100%}
 .zap .b i{position:absolute;right:12px;bottom:4px;font-style:normal;font-size:12px;color:#7b8a85;font-weight:600}
 .lig{position:absolute;inset:0;background:linear-gradient(#18202b,#0c1016);color:#fff;text-align:center}
 .lig .av{width:150px;height:150px;border-radius:50%;background:#3a4656;margin:150px auto 26px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:64px;color:#aab6c6}
@@ -43,7 +50,7 @@ html,body{margin:0;background:#000}
 .lig .bt{position:absolute;left:50%;bottom:90px;width:92px;height:92px;margin-left:-46px;border-radius:50%;background:#e5383b}
 .lig.fim .st{color:#ff7b7b;font-weight:800;font-size:27px} .lig.fim .bt{background:#3a4656}
 </style>
-<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
 </head>
 <body>
 <div id="stage">
@@ -51,7 +58,7 @@ html,body{margin:0;background:#000}
   <div id="vig"></div>
   <div id="dim"></div>
   <div id="fone"><div class="corpo"></div><div class="tela"><div class="ilha"></div><div id="foneTela"></div></div><div class="dedo e"></div><div class="dedo d"></div></div>
-  <div id="hud"><div class="l1"></div><div class="l2"><span class="dot"></span><span id="hud2"></span></div></div>
+  <div id="hud"><div class="tag"><div class="t1">TURNO DA NOITE</div><div class="t2">EP <span id="hudEp"></span></div></div><br><div class="rel">TER <span id="hudHora"></span></div></div>
   <div id="cap"></div>
   <div id="fim"></div>
 </div>
