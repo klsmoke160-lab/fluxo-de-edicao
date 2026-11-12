@@ -1,0 +1,229 @@
+{
+ "id": "ep03",
+ "titulo": "A ligação",
+ "hud": [
+  "TURNO DA NOITE · EP 03",
+  "TERÇA · 03:05"
+ ],
+ "tomadas": [
+  {
+   "tipo": "registradora",
+   "cupom": -5,
+   "itens": [
+    {
+     "txt": "1x VELA   4,50",
+     "em": 0
+    },
+    {
+     "txt": "1x FÓSFORO   2,00",
+     "em": 0
+    },
+    {
+     "txt": "1x SAL GROSSO   6,90",
+     "em": 0
+    }
+   ],
+   "min": 3.4,
+   "sfx": [
+    [
+     "impacto",
+     0.2,
+     -8
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "fone": true,
+   "cabeca": [
+    -0.25,
+    -0.25
+   ],
+   "susto": [
+    0.3,
+    0.3
+   ],
+   "min": 6.5,
+   "pre": 1.6,
+   "fala": [
+    "davi",
+    "Seu Osmar, desculpa a hora. Tem alguém na loja. No corredor três."
+   ],
+   "legenda": "Seu Osmar, desculpa a hora. Tem alguém na loja. No corredor 3."
+  },
+  {
+   "tipo": "celular",
+   "tela": "ligacao",
+   "nome": "Seu Osmar",
+   "desde": 9,
+   "min": 4.5,
+   "pre": 1.0,
+   "fala": [
+    "osmar",
+    "Davi... que corredor três?"
+   ],
+   "legenda": "Davi... que corredor 3?"
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "fone": true,
+   "cabeca": [
+    -0.25,
+    -0.25
+   ],
+   "susto": [
+    0.3,
+    0.3
+   ],
+   "min": 4,
+   "pre": 0.5,
+   "fala": [
+    "davi",
+    "O do fundo. O da câmera três."
+   ],
+   "legenda": "O do fundo. O da câmera 3."
+  },
+  {
+   "tipo": "celular",
+   "tela": "ligacao",
+   "nome": "Seu Osmar",
+   "desde": 17,
+   "min": 7,
+   "pre": 0.6,
+   "fala": [
+    "osmar",
+    "Filho, a loja tem dois corredores. Sempre teve dois. Fui eu que montei as prateleiras."
+   ]
+  },
+  {
+   "tipo": "placa",
+   "n": 3,
+   "min": 4.8,
+   "pre": 1.2,
+   "fala": [
+    "davi",
+    "Eu tô olhando pra placa agora."
+   ],
+   "sfx": [
+    [
+     "impacto",
+     0.2,
+     -5
+    ]
+   ]
+  },
+  {
+   "tipo": "celular",
+   "tela": "ligacao",
+   "nome": "Seu Osmar",
+   "desde": 29,
+   "min": 7.5,
+   "pre": 0.6,
+   "fala": [
+    "osmar",
+    "E a loja só tem duas câmeras. Davi, presta atenção. Sai de trás do balcão e conta os"
+   ],
+   "legenda": "E a loja só tem duas câmeras. Davi, presta atenção. Sai de trás do balcão e conta os...",
+   "sfx": [
+    [
+     "chiado",
+     3.0
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "fone": true,
+   "cabeca": [
+    -0.25,
+    -0.25
+   ],
+   "susto": [
+    0.3,
+    0.7
+   ],
+   "min": 4,
+   "pre": 0.9,
+   "fala": [
+    "davi",
+    "Seu Osmar? Alô?"
+   ],
+   "sfx": [
+    [
+     "desligado",
+     0.0
+    ]
+   ]
+  },
+  {
+   "tipo": "celular",
+   "tela": "encerrada",
+   "nome": "Seu Osmar",
+   "min": 6,
+   "pre": 2.0,
+   "fala": [
+    "davi",
+    "Zero segundos? A gente tava falando agora!"
+   ],
+   "sfx": [
+    [
+     "impacto",
+     0.5
+    ]
+   ]
+  },
+  {
+   "tipo": "monitor",
+   "vulto": "perto",
+   "apaga": 4.0,
+   "fecha": 36,
+   "min": 9.5,
+   "falhas": [
+    1.2,
+    4.0
+   ],
+   "sfx": [
+    [
+     "estatica",
+     1.2
+    ],
+    [
+     "apagao",
+     4.0
+    ],
+    [
+     "impacto",
+     4.0
+    ],
+    [
+     "estatica",
+     4.0
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "camAng": -1.6,
+   "cabeca": [
+    0.82,
+    0.82
+   ],
+   "susto": [
+    0.6,
+    1
+   ],
+   "min": 3.2,
+   "dist": 1.5
+  },
+  {
+   "tipo": "preto",
+   "texto": "CONTINUA...",
+   "sub": "EP 04 · DOIS CORREDORES",
+   "min": 2.4
+  }
+ ]
+}

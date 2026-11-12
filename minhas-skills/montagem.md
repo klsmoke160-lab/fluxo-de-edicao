@@ -39,5 +39,15 @@ Fase atual: 3 (referências e perfil) · Atualizado em 2026-11-12
 - Final escolhido (EP 4): o corredor 3 não existe. O Davi conta só dois corredores; a CAM 03 mostra o vulto andando até o caixa; a loja está vazia.
 - Roteiro v01 dos 4 episódios em `serie/turno-da-noite/roteiro.md`. Aguardando a aprovação dela.
 
+## Produção (ela pediu: "faz tudo")
+- Vozes: Piper (aberto, roda sem conta), três vozes pt-BR: Davi = faber, Seu Osmar = jeff com filtro de telefone, Seu Jair = cadu. Os modelos ficam em `serie/turno-da-noite/vozes-modelos/` (fora do git; baixar de novo de huggingface.co/rhasspy/piper-voices).
+- A cliente Dona Neide virou o Seu Jair, porque o Piper não tem voz feminina em pt-BR.
+- Motor dos episódios: `serie/turno-da-noite/motor/`, tomadas em `episodios/epNN.json`, `montar.py` (vozes, tempos, áudio) e `render.cjs`.
+- Efeitos sonoros e ambiente são sintetizados no FFmpeg (sem biblioteca de sons, sem música).
+- Entregas v01 em `serie/turno-da-noite/entregas/`, 720×1280, 30 fps.
+
+## Skills escritas (série)
+- [x] `minhas-skills/serie-animada/SKILL.md`: skill mestra da série, com as etapas, os tipos de tomada e as armadilhas.
+
 ## Próximo passo
-Ela aprova ou corrige o roteiro e diz qual serviço de voz de IA vai usar (já perguntado duas vezes, sem resposta). Depois: produzir o EP 01 e montar o fluxo de etapas da série.
+Ela assiste aos 4 episódios v01 e pede as correções (voz, ritmo, visual). Eu não ouvi o áudio nem assisti ao movimento: conferi por quadros parados e por medições.

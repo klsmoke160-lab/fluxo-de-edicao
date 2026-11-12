@@ -1,0 +1,210 @@
+{
+ "id": "ep04",
+ "titulo": "Dois corredores",
+ "hud": [
+  "TURNO DA NOITE · EP 04",
+  "TERÇA · 03:12"
+ ],
+ "luz": "meia",
+ "layout": {
+  "c3": false
+ },
+ "tomadas": [
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "cabeca": [
+    0.82,
+    -0.4
+   ],
+   "vira": 1.0,
+   "min": 5.2,
+   "pre": 2.0,
+   "fala": [
+    "davi",
+    "Tá. Conta, Davi. Só conta."
+   ]
+  },
+  {
+   "tipo": "lanterna",
+   "n": 1,
+   "luz": "escuro",
+   "min": 4.6,
+   "pre": 2.2,
+   "fala": [
+    "davi",
+    "Um."
+   ],
+   "sfx": [
+    [
+     "passos",
+     0.2
+    ]
+   ]
+  },
+  {
+   "tipo": "lanterna",
+   "n": 2,
+   "luz": "escuro",
+   "min": 4.6,
+   "pre": 2.2,
+   "fala": [
+    "davi",
+    "Dois."
+   ],
+   "sfx": [
+    [
+     "passos",
+     0.2
+    ]
+   ]
+  },
+  {
+   "tipo": "lanterna",
+   "n": 3,
+   "luz": "escuro",
+   "min": 7.2,
+   "pre": 4.2,
+   "fala": [
+    "davi",
+    "Cadê?"
+   ],
+   "legenda": "...Cadê?",
+   "sfx": [
+    [
+     "passos",
+     0.2
+    ],
+    [
+     "impacto",
+     3.0
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "parede",
+   "maoParede": true,
+   "camAng": 1.9,
+   "min": 5.6,
+   "pre": 1.4,
+   "fala": [
+    "davi",
+    "Tinha um corredor aqui. Eu andei nele."
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "parede",
+   "camAng": 1.9,
+   "cabeca": [
+    0,
+    -1.1
+   ],
+   "torce": -0.9,
+   "susto": [
+    0.2,
+    0.8
+   ],
+   "vira": 1.0,
+   "min": 3.6,
+   "sfx": [
+    [
+     "bip",
+     0.9
+    ]
+   ]
+  },
+  {
+   "tipo": "pov_anda",
+   "para": "caixa",
+   "min": 2.6,
+   "sfx": [
+    [
+     "passos_rapidos",
+     0.1
+    ]
+   ]
+  },
+  {
+   "tipo": "monitor",
+   "vulto": "anda",
+   "andaEm": 2.2,
+   "min": 10.5,
+   "pre": 5.0,
+   "falhas": [
+    2.2,
+    8.6
+   ],
+   "fala": [
+    "davi",
+    "Não, não, não..."
+   ],
+   "sfx": [
+    [
+     "estatica",
+     2.2
+    ],
+    [
+     "impacto",
+     2.2
+    ],
+    [
+     "passos",
+     3.0,
+     -8
+    ],
+    [
+     "passos",
+     6.0,
+     -5
+    ],
+    [
+     "estatica",
+     8.6
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "cabeca": [
+    0.82,
+    -0.35
+   ],
+   "vira": 1.2,
+   "susto": [
+    0.9,
+    1
+   ],
+   "min": 3.6
+  },
+  {
+   "tipo": "pov_loja",
+   "min": 9.5,
+   "pre": 5.2,
+   "fala": [
+    "davi",
+    "Não tem ninguém."
+   ],
+   "legenda": "...Não tem ninguém."
+  },
+  {
+   "tipo": "campainha",
+   "toca": 3.2,
+   "min": 6,
+   "sfx": [
+    [
+     "ding",
+     3.2
+    ]
+   ]
+  },
+  {
+   "tipo": "preto",
+   "texto": "TURNO DA NOITE",
+   "sub": "FIM DA 1ª TEMPORADA",
+   "min": 3.2
+  }
+ ]
+}

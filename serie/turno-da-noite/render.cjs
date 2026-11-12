@@ -1,7 +1,8 @@
-// Renderiza uma cena (pasta com index.html que expõe window.renderFrame(t) e window.DURACAO).
+// Renderiza um episódio (episodios/<ep>.json, pelo motor) ou uma cena própria (pasta com index.html).
+// A página expõe window.renderFrame(t) e window.DURACAO.
 // Uso:
-//   node render.cjs <pasta> quadros 1,5,8        -> PNGs em saida/<pasta>/
-//   node render.cjs <pasta> video [fps]          -> saida/<pasta>.mp4 (sem áudio)
+//   node render.cjs ep01 quadros 1,5,8        -> PNGs em saida/ep01/
+//   node render.cjs ep01 video [fps]          -> saida/ep01/video.mp4 (sem áudio)
 const http = require('http'), fs = require('fs'), path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
@@ -27,7 +28,8 @@ const servidor = http.createServer((req, res) => {
   const pagina = await navegador.newPage({ viewport: { width: 720, height: 1280 }, deviceScaleFactor: 1 });
   pagina.on('console', m => { if (m.type() === 'error') console.error('[página]', m.text()); });
   pagina.on('pageerror', e => console.error('[erro na página]', e.message));
-  await pagina.goto(`http://127.0.0.1:${porta}/${pasta}/index.html`);
+  const cenaPropria = fs.existsSync(path.join(raiz, pasta, 'index.html'));
+  await pagina.goto(`http://127.0.0.1:${porta}/` + (cenaPropria ? `${pasta}/index.html` : `motor/index.html?ep=${pasta}`));
   await pagina.waitForFunction('window.pronto === true', null, { timeout: 60000 });
   const duracao = await pagina.evaluate('window.DURACAO');
   const quadro = t => pagina.evaluate(t => new Promise(r => { window.renderFrame(t); requestAnimationFrame(() => requestAnimationFrame(r)); }), t);
@@ -44,7 +46,8 @@ const servidor = http.createServer((req, res) => {
     }
   } else {
     const fps = Number(arg) || 30, total = Math.round(duracao * fps);
-    const arquivo = path.join(saida, `${pasta}.mp4`);
+    fs.mkdirSync(path.join(saida, pasta), { recursive: true });
+    const arquivo = cenaPropria ? path.join(saida, `${pasta}.mp4`) : path.join(saida, pasta, 'video.mp4');
     const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', arquivo], { stdio: ['pipe', 'inherit', 'inherit'] });
     const inicio = Date.now();

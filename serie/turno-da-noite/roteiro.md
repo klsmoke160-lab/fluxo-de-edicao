@@ -1,4 +1,4 @@
-# Turno da Noite — roteiro da 1ª temporada (v01)
+# Turno da Noite — roteiro da 1ª temporada (v02)
 
 Série animada de suspense para o TikTok. 4 episódios, vertical 9:16, cada um com mais de 1 minuto. Sem votação: cada episódio termina num gancho.
 
@@ -11,7 +11,7 @@ Série animada de suspense para o TikTok. 4 episódios, vertical 9:16, cada um c
 |---|---|---|---|
 | Davi | 19 anos, camisa vermelha, primeiro emprego | branca | jovem, fala rápido quando fica nervoso |
 | Seu Osmar | dono da loja, só por telefone e mensagem | amarela | mais velho, calmo, sonolento |
-| Dona Neide | taxista, cliente de verdade (só no EP 2) | rosa | adulta, direta |
+| Seu Jair | taxista, cliente de verdade (só no EP 2) | rosa | adulto, direto |
 | O vulto | o cliente do corredor 3 | não tem | não fala |
 
 ## Cenários
@@ -20,7 +20,11 @@ Série animada de suspense para o TikTok. 4 episódios, vertical 9:16, cada um c
 3. A tela do monitor (CAM 03).
 4. A tela do celular do Davi (mensagens e ligação).
 
-A duração de cada episódio é uma estimativa pelas falas. O tempo real sai das vozes gravadas.
+**Mudança da v02:** a cliente Dona Neide virou o **Seu Jair**. O motor de voz usado (Piper, aberto e gratuito) só tem vozes masculinas em português do Brasil.
+
+Este arquivo é o roteiro para leitura. A versão que o motor executa, tomada por tomada, com os tempos mínimos e os efeitos sonoros, está em `episodios/ep01.json` a `ep04.json`. Na produção entraram algumas tomadas de ligação (o Davi andando até o corredor, closes de reação) que não mudam a história.
+
+Durações finais com as vozes: EP 01 66,5 s · EP 02 74,9 s · EP 03 66,6 s · EP 04 67,1 s.
 
 ---
 
@@ -49,10 +53,10 @@ A duração de cada episódio é uma estimativa pelas falas. O tempo real sai da
 | 1 | Monitor | CAM 03: corredor vazio. | DAVI: Sumiu. Foi sono. Só pode ser sono. |
 | 2 | Registradora em close | Bip. O visor acende sozinho: "1x VELA — R$ 4,50". | DAVI: Eu não passei nada. |
 | 3 | Registradora | Bip, bip. "1x FÓSFORO". "1x SAL GROSSO 1KG". | DAVI: Vela, fósforo, sal grosso... Quem tá comprando isso? |
-| 4 | Caixa, plano aberto | O sino da porta toca. Dona Neide entra. | NEIDE: Boa noite, meu filho. Só um café pra viagem. |
-| 5 | Close da Dona Neide | Ela olha por cima do ombro do Davi, para o fundo da loja. | NEIDE: Seu colega não vai me atender, não? Tá ali parado no fundo. |
-| 6 | Close do Davi | Olhos arregalados. Ele não vira para trás. | DAVI: Eu trabalho sozinho, Dona Neide. |
-| 7 | Plano dos dois | Ela põe o dinheiro no balcão sem esperar o troco e sai. O sino toca. | NEIDE: ...Então fica com o troco. |
+| 4 | Caixa, plano aberto | O sino da porta toca. Seu Jair entra. | JAIR: Boa noite, meu filho. Só um café pra viagem. |
+| 5 | Close do Seu Jair | Ele olha por cima do ombro do Davi, para o fundo da loja. | JAIR: Seu colega não vai me atender, não? Tá ali parado no fundo. |
+| 6 | Close do Davi | Olhos arregalados. Ele não vira para trás. | DAVI: Eu trabalho sozinho, Seu Jair. |
+| 7 | Plano dos dois | Ele põe o dinheiro no balcão sem esperar o troco e sai. O sino toca. | JAIR: ...Então fica com o troco. |
 | 8 | Corredor 3 | Davi entra no corredor. Todas as prateleiras estão cheias de velas brancas, iguais. | DAVI: A gente nem vende vela. |
 | 9 | Registradora em close | A impressora solta um cupom: "TOTAL: 3 ITENS. OBRIGADO, DAVI." | (só o som da impressora) |
 

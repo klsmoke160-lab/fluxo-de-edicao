@@ -1,0 +1,259 @@
+{
+ "id": "ep02",
+ "titulo": "A compra",
+ "hud": [
+  "TURNO DA NOITE · EP 02",
+  "TERÇA · 02:53"
+ ],
+ "tomadas": [
+  {
+   "tipo": "monitor",
+   "vulto": "nenhum",
+   "min": 6,
+   "pre": 2.0,
+   "fala": [
+    "davi",
+    "Sumiu. Foi sono. Só pode ser sono."
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "cabeca": [
+    0.82,
+    -0.3
+   ],
+   "vira": 1.9,
+   "min": 3.2,
+   "sfx": [
+    [
+     "bip",
+     1.8
+    ]
+   ]
+  },
+  {
+   "tipo": "registradora",
+   "itens": [
+    {
+     "txt": "1x VELA   4,50",
+     "em": 0
+    }
+   ],
+   "min": 4.5,
+   "pre": 1.3,
+   "fala": [
+    "davi",
+    "Eu não passei nada."
+   ]
+  },
+  {
+   "tipo": "registradora",
+   "itens": [
+    {
+     "txt": "1x VELA   4,50",
+     "em": 0
+    },
+    {
+     "txt": "1x FÓSFORO   2,00",
+     "em": 0.7
+    },
+    {
+     "txt": "1x SAL GROSSO   6,90",
+     "em": 1.7
+    }
+   ],
+   "min": 7,
+   "pre": 2.8,
+   "fala": [
+    "davi",
+    "Vela, fósforo, sal grosso... Quem tá comprando isso?"
+   ],
+   "sfx": [
+    [
+     "bip",
+     0.7
+    ],
+    [
+     "bip",
+     1.7
+    ]
+   ]
+  },
+  {
+   "tipo": "dois",
+   "cliente": "entra",
+   "min": 6.5,
+   "pre": 3.2,
+   "fala": [
+    "jair",
+    "Boa noite, meu filho. Só um café pra viagem."
+   ],
+   "sfx": [
+    [
+     "sino",
+     0.3
+    ],
+    [
+     "passos",
+     0.6
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "quem": "cliente",
+   "lugar": "balcao",
+   "camAng": 2.5,
+   "cabeca": [
+    0,
+    1.05
+   ],
+   "vira": 0.6,
+   "min": 6,
+   "pre": 1.5,
+   "fala": [
+    "jair",
+    "Seu colega não vai me atender, não? Tá ali parado no fundo."
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "susto": [
+    0.2,
+    0.9
+   ],
+   "vira": 0.3,
+   "min": 4.8,
+   "pre": 1.4,
+   "fala": [
+    "davi",
+    "Eu trabalho sozinho, Seu Jair."
+   ],
+   "sfx": [
+    [
+     "impacto",
+     0.3,
+     -4
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "quem": "cliente",
+   "lugar": "balcao",
+   "camAng": 2.5,
+   "cabeca": [
+    1.05,
+    0
+   ],
+   "susto": [
+    0.1,
+    0.7
+   ],
+   "vira": 0.7,
+   "min": 3
+  },
+  {
+   "tipo": "dois",
+   "cliente": "sai",
+   "parte": 2.8,
+   "min": 6.2,
+   "pre": 0.5,
+   "fala": [
+    "jair",
+    "Então fica com o troco."
+   ],
+   "legenda": "...Então fica com o troco.",
+   "sfx": [
+    [
+     "passos",
+     2.8
+    ],
+    [
+     "sino",
+     5.4
+    ]
+   ]
+  },
+  {
+   "tipo": "pov_anda",
+   "para": "corredor",
+   "min": 4,
+   "sfx": [
+    [
+     "passos",
+     0.2
+    ]
+   ]
+  },
+  {
+   "tipo": "corredor3",
+   "layout": {
+    "velas": true
+   },
+   "min": 8.5,
+   "pre": 3.4,
+   "fala": [
+    "davi",
+    "A gente nem vende vela."
+   ],
+   "sfx": [
+    [
+     "impacto",
+     0.4
+    ]
+   ],
+   "luz": "meia"
+  },
+  {
+   "tipo": "registradora",
+   "cupom": 0.8,
+   "itens": [
+    {
+     "txt": "1x VELA   4,50",
+     "em": 0
+    },
+    {
+     "txt": "1x FÓSFORO   2,00",
+     "em": 0
+    },
+    {
+     "txt": "1x SAL GROSSO   6,90",
+     "em": 0
+    }
+   ],
+   "min": 7.5,
+   "sfx": [
+    [
+     "impressora",
+     0.8
+    ],
+    [
+     "impacto",
+     3.6
+    ]
+   ]
+  },
+  {
+   "tipo": "close",
+   "lugar": "caixa",
+   "cabeca": [
+    -0.2,
+    -0.2
+   ],
+   "susto": [
+    0.5,
+    1
+   ],
+   "min": 3
+  },
+  {
+   "tipo": "preto",
+   "texto": "CONTINUA...",
+   "sub": "EP 03 · A LIGAÇÃO",
+   "min": 2.4
+  }
+ ]
+}
