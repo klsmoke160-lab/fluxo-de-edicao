@@ -10,7 +10,7 @@ import hashlib, json, os, subprocess, sys
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 FPS = 30
 SR = 44100
-VERSAO = "v04"
+VERSAO = "v05"
 
 # Voz de cada personagem: modelo do Piper, ritmo (maior = mais devagar), tom (maior = mais agudo).
 VOZES = {

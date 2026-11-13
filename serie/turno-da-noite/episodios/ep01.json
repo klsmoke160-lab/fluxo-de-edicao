@@ -7,6 +7,26 @@
  ],
  "tomadas": [
   {
+   "tipo": "monitor",
+   "vulto": "meio",
+   "fecha": 52,
+   "min": 3.4,
+   "falhas": [
+    3.1
+   ],
+   "sfx": [
+    [
+     "impacto",
+     0.05,
+     -2
+    ],
+    [
+     "estatica",
+     3.1
+    ]
+   ]
+  },
+  {
    "tipo": "caixa_aberto",
    "olha": "frente",
    "min": 6,
@@ -202,5 +222,9 @@
    "sub": "EP 02 · A COMPRA",
    "min": 2.4
   }
- ]
+ ],
+ "gancho": {
+  "texto": "Nunca desligue o monitor das câmeras.",
+  "ate": 3.2
+ }
 }

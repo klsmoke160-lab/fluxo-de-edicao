@@ -25,6 +25,8 @@ html,body{margin:0;background:#000}
   background:rgba(18,13,28,.88);border-radius:16px;padding:26px 24px 17px;box-shadow:0 6px 0 rgba(0,0,0,.3)}
 #cap .quem{position:absolute;left:18px;top:-15px;color:#16130a;font-weight:900;font-size:16px;letter-spacing:1.5px;padding:4px 11px;border-radius:8px}
 #cap .txt{display:block;color:#fff;font-weight:600;font-size:29px;line-height:1.24}
+#gancho{position:absolute;left:50%;top:880px;transform:translateX(-50%) rotate(-2deg);width:max-content;max-width:600px;display:none;
+  background:#ffd400;color:#16130a;font-weight:900;font-size:44px;line-height:1.12;text-align:center;padding:18px 26px;border-radius:14px;box-shadow:0 8px 0 rgba(0,0,0,.4)}
 #fim{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;
   font-weight:900;font-size:36px;line-height:1.35;letter-spacing:.5px;padding:0 70px}
 #fim small{display:block;font-weight:800;font-size:19px;color:#ffd400;margin-top:14px;letter-spacing:2px}
@@ -60,6 +62,7 @@ html,body{margin:0;background:#000}
   <div id="fone"><div class="corpo"></div><div class="tela"><div class="ilha"></div><div id="foneTela"></div></div><div class="dedo e"></div><div class="dedo d"></div></div>
   <div id="hud"><div class="tag"><div class="t1">TURNO DA NOITE</div><div class="t2">EP <span id="hudEp"></span></div></div><br><div class="rel">TER <span id="hudHora"></span></div></div>
   <div id="cap"></div>
+  <div id="gancho"></div>
   <div id="fim"></div>
 </div>
 <script type="module" src="./motor.js"></script>

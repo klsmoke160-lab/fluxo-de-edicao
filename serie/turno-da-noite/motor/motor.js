@@ -544,6 +544,9 @@ function passeMonitor(s, u, d) {
   telaMat.uniforms.falha.value = (s.falhas ?? []).some(t => u >= t && u < t + 0.15) ? 1 : 0;
 }
 
+const ganchoEl = document.getElementById('gancho');
+if (EP.gancho) ganchoEl.textContent = EP.gancho.texto;
+
 window.renderFrame = function (t) {
   t = Math.min(t, TL.dur - 1e-4);
   const i = Math.max(0, TL.tomadas.findIndex(x => t >= x.ini && t < x.fim));
@@ -572,6 +575,10 @@ window.renderFrame = function (t) {
   if (st.lanterna) { lanterna.position.copy(cam.position); lanterna.position.y -= 0.25; lanterna.target.position.copy(alvo); lanterna.target.updateMatrixWorld(); }
   renderer.render(scene, cam);
 
+  if (EP.gancho && t < EP.gancho.ate) {
+    ganchoEl.style.display = 'block';
+    ganchoEl.style.opacity = ss(0.05, 0.3, t) * (1 - ss(EP.gancho.ate - 0.3, EP.gancho.ate, t));
+  } else ganchoEl.style.display = 'none';
   if (capEl.dataset.txt !== legenda) {
     capEl.dataset.txt = legenda; capEl.style.display = legenda ? 'block' : 'none';
     capEl.innerHTML = legenda ? `<span class="quem" style="background:${cor}">${quem}</span><span class="txt"></span>` : '';
