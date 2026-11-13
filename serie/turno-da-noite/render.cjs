@@ -2,7 +2,7 @@
 // A página expõe window.renderFrame(t) e window.DURACAO.
 // Uso:
 //   node render.cjs ep01 quadros 1,5,8        -> PNGs em saida/ep01/
-//   node render.cjs ep01 video [fps]          -> saida/ep01/video.mp4 (sem áudio)
+//   node render.cjs ep01 video [fps]          -> saida/ep01/video.mp4 (sem áudio; retomável: se parar, rode de novo)
 const http = require('http'), fs = require('fs'), path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
@@ -45,20 +45,31 @@ const servidor = http.createServer((req, res) => {
       console.log(f);
     }
   } else {
-    const fps = Number(arg) || 30, total = Math.round(duracao * fps);
-    fs.mkdirSync(path.join(saida, pasta), { recursive: true });
-    const arquivo = cenaPropria ? path.join(saida, `${pasta}.mp4`) : path.join(saida, pasta, 'video.mp4');
-    const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
-      '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', arquivo], { stdio: ['pipe', 'inherit', 'inherit'] });
-    const inicio = Date.now();
-    for (let i = 0; i < total; i++) {
-      await quadro(i / fps);
-      const img = await pagina.screenshot({ type: 'jpeg', quality: 95, clip: recorte });
-      if (!ff.stdin.write(img)) await new Promise(r => ff.stdin.once('drain', r));
-      if (i % 60 === 0) console.log(`quadro ${i}/${total}`);
+    // Retomável: o vídeo sai em trechos de 10 s (segs/seg_NNN.mp4). Trecho pronto não se refaz.
+    const fps = Number(arg) || 30, total = Math.round(duracao * fps), TRECHO = fps * 10;
+    const dirEp = path.join(saida, pasta); fs.mkdirSync(dirEp, { recursive: true });
+    const arquivo = cenaPropria ? path.join(saida, `${pasta}.mp4`) : path.join(dirEp, 'video.mp4');
+    const segs = path.join(dirEp, 'segs'); fs.mkdirSync(segs, { recursive: true });
+    const inicio = Date.now(), lista = [];
+    for (let ini = 0, n = 0; ini < total; ini += TRECHO, n++) {
+      const fim = Math.min(total, ini + TRECHO), seg = path.join(segs, `seg_${String(n).padStart(3, '0')}.mp4`);
+      lista.push(seg);
+      if (fs.existsSync(seg)) { console.log(`trecho ${n} já pronto`); continue; }
+      const parcial = seg + '.parcial.mp4';
+      const ff = spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
+        '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p', '-g', String(fps), parcial], { stdio: ['pipe', 'inherit', 'inherit'] });
+      for (let i = ini; i < fim; i++) {
+        await quadro(i / fps);
+        const img = await pagina.screenshot({ type: 'jpeg', quality: 95, clip: recorte });
+        if (!ff.stdin.write(img)) await new Promise(r => ff.stdin.once('drain', r));
+      }
+      ff.stdin.end();
+      await new Promise(r => ff.on('close', r));
+      fs.renameSync(parcial, seg);
+      console.log(`quadro ${fim}/${total}`);
     }
-    ff.stdin.end();
-    await new Promise(r => ff.on('close', r));
+    fs.writeFileSync(path.join(segs, 'lista.txt'), lista.map(f => `file '${f}'`).join('\n'));
+    await new Promise((ok, falha) => spawn('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', path.join(segs, 'lista.txt'), '-c', 'copy', '-movflags', '+faststart', arquivo], { stdio: 'inherit' }).on('close', c => c ? falha(new Error('concat falhou')) : ok()));
     console.log(`${arquivo} (${total} quadros, ${((Date.now() - inicio) / 1000).toFixed(0)} s)`);
   }
   await navegador.close(); servidor.close();
