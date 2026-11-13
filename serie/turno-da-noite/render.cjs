@@ -50,6 +50,15 @@ const servidor = http.createServer((req, res) => {
     const dirEp = path.join(saida, pasta); fs.mkdirSync(dirEp, { recursive: true });
     const arquivo = cenaPropria ? path.join(saida, `${pasta}.mp4`) : path.join(dirEp, 'video.mp4');
     const segs = path.join(dirEp, 'segs'); fs.mkdirSync(segs, { recursive: true });
+    // Trecho antigo não vale se o episódio mudou (tempos, cenas ou motor): compara uma impressão digital.
+    const impressao = require('crypto').createHash('sha1');
+    for (const f of [path.join(dirEp, 'timeline.json'), path.join(raiz, 'episodios', `${pasta}.json`), path.join(raiz, 'motor', 'motor.js'), path.join(raiz, 'motor', 'index.html')]) if (fs.existsSync(f)) impressao.update(fs.readFileSync(f));
+    const marca = impressao.digest('hex'), arqMarca = path.join(segs, 'marca.txt');
+    if (!fs.existsSync(arqMarca) || fs.readFileSync(arqMarca, 'utf8') !== marca) {
+      for (const f of fs.readdirSync(segs)) if (f.startsWith('seg_')) fs.unlinkSync(path.join(segs, f));
+      fs.writeFileSync(arqMarca, marca);
+      console.log('episódio mudou: refazendo todos os trechos');
+    }
     const inicio = Date.now(), lista = [];
     for (let ini = 0, n = 0; ini < total; ini += TRECHO, n++) {
       const fim = Math.min(total, ini + TRECHO), seg = path.join(segs, `seg_${String(n).padStart(3, '0')}.mp4`);
