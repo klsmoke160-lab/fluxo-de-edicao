@@ -125,6 +125,32 @@ def gerar_fala(quem, texto, pasta, emo="normal"):
     return final
 
 
+def fala_externa(ep, n, quem, pasta, emo):
+    """Se existir vozes-externas/<ep>/NN_<quem>.(wav|mp3|m4a|ogg|flac), usa esse áudio no lugar da voz do Piper."""
+    d = os.path.join(RAIZ, "vozes-externas", ep)
+    for ext in ("wav", "mp3", "m4a", "ogg", "flac"):
+        arq = os.path.join(d, f"{n:02d}_{quem}.{ext}")
+        if os.path.exists(arq):
+            break
+    else:
+        return None
+    st = os.stat(arq)
+    chave = hashlib.sha1(f"{arq}|{st.st_size}|{st.st_mtime_ns}|{emo}|e1".encode()).hexdigest()[:12]
+    final = os.path.join(pasta, f"ext_{n:02d}_{quem}_{chave}.wav")
+    if os.path.exists(final):
+        return final
+    tira = "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04"
+    filtros = [f"aresample={SR}", tira, "areverse", tira, "areverse"]
+    if VOZES[quem]["telefone"]:
+        filtros += ["highpass=f=380", "lowpass=f=3000", "acompressor=threshold=-22dB:ratio=4"]
+    tratado = final + ".tratado.wav"
+    sh(["ffmpeg", "-v", "error", "-y", "-i", arq, "-af", ",".join(filtros), "-ac", "1", tratado])
+    ganho = ALVO_VOZ_DB + EMOCOES[emo]["db"] - volume_medio(tratado)
+    sh(["ffmpeg", "-v", "error", "-y", "-i", tratado, "-af", f"volume={ganho:.2f}dB,alimiter=limit=0.9", "-ac", "1", final])
+    os.remove(tratado)
+    return final
+
+
 def q(t):
     return round(t * FPS) / FPS
 
@@ -133,12 +159,14 @@ def cmd_vozes(ep):
     dados = json.load(open(os.path.join(RAIZ, "episodios", ep + ".json")))
     pasta = os.path.join(RAIZ, "saida", ep); falas = os.path.join(pasta, "falas")
     os.makedirs(falas, exist_ok=True)
-    t, tomadas = 0.0, []
+    t, tomadas, nfala = 0.0, [], 0
     for i, s in enumerate(dados["tomadas"]):
         voz = None
         dur = s.get("min", 2.5)
         if "fala" in s:
-            arq = gerar_fala(s["fala"][0], s["fala"][1], falas, s.get("emo", "normal"))
+            nfala += 1
+            emo = s.get("emo", "normal")
+            arq = fala_externa(ep, nfala, s["fala"][0], falas, emo) or gerar_fala(s["fala"][0], s["fala"][1], falas, emo)
             dv = duracao(arq)
             pre = s.get("pre", 0.35)
             dur = max(dur, pre + dv + s.get("pos", 0.55))
@@ -193,6 +221,37 @@ def cmd_audio(ep):
     print(saida, f"{duracao(saida):.1f} s")
 
 
+DICAS = {
+    "normal": "natural, conversa do dia a dia", "leve": "à vontade, meio brincando", "cansado": "baixo, arrastado, entediado",
+    "intriga": "estranhando, sobe no fim da frase", "alegre": "simpático forçado, animado demais", "tenso": "baixo, contido, quase sussurrando",
+    "medo": "agudo, respiração curta, assustado", "susto": "alto, rápido, em pânico", "calmo": "calmo e firme, voz de quem manda",
+}
+PERSONAGENS = {"davi": "Davi (rapaz de 19 anos, caixa do mercadinho)", "osmar": "Seu Osmar (dono, mais velho; ligação de telefone)", "jair": "Seu Jair (taxista, voz grave, mais velho)"}
+
+
+def cmd_roteiro_voz(_=None):
+    linhas = ["# Falas para gerar na ferramenta de áudio", "",
+              "Gere **um arquivo por fala**, com o nome indicado, e coloque na pasta indicada. Formatos aceitos: wav, mp3, m4a, ogg, flac.",
+              "Use sempre a mesma voz para cada personagem. O texto está escrito como deve ser falado (números por extenso).", ""]
+    for ep in ("ep01", "ep02", "ep03", "ep04"):
+        dados = json.load(open(os.path.join(RAIZ, "episodios", ep + ".json")))
+        linhas += [f"## {ep.upper()} · {dados['titulo']}  (pasta `vozes-externas/{ep}/`)", "",
+                   "| Arquivo | Personagem | Como falar | Texto |", "|---|---|---|---|"]
+        n = 0
+        for s in dados["tomadas"]:
+            if "fala" in s:
+                n += 1
+                quem, texto = s["fala"][0], s["fala"][1]
+                linhas.append(f"| `{n:02d}_{quem}.mp3` | {PERSONAGENS[quem]} | {DICAS[s.get('emo', 'normal')]} | {texto} |")
+        linhas.append("")
+    os.makedirs(os.path.join(RAIZ, "vozes-externas"), exist_ok=True)
+    with open(os.path.join(RAIZ, "vozes-externas", "LEIA-ME.md"), "w") as f:
+        f.write("\n".join(linhas))
+    print("vozes-externas/LEIA-ME.md")
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "roteiro-voz":
+        cmd_roteiro_voz(); sys.exit()
     ep, cmd = sys.argv[1], sys.argv[2]
     {"vozes": cmd_vozes, "audio": cmd_audio}[cmd](ep)
