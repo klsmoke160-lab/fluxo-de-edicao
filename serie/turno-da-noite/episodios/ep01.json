@@ -14,7 +14,8 @@
    "fala": [
     "davi",
     "Duas e quarenta e sete. Nenhum cliente desde a meia-noite."
-   ]
+   ],
+   "emo": "cansado"
   },
   {
    "tipo": "celular",
@@ -47,7 +48,8 @@
      "notif",
      1.7
     ]
-   ]
+   ],
+   "emo": "leve"
   },
   {
    "tipo": "caixa_aberto",
@@ -77,7 +79,8 @@
      0.3,
      -6
     ]
-   ]
+   ],
+   "emo": "intriga"
   },
   {
    "tipo": "close",
@@ -96,7 +99,8 @@
    "fala": [
     "davi",
     "Eu não ouvi a porta abrir."
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "sai_do_caixa",
@@ -111,7 +115,8 @@
      "passos",
      0.5
     ]
-   ]
+   ],
+   "emo": "alegre"
   },
   {
    "tipo": "pov_anda",
@@ -139,7 +144,8 @@
      "pisca",
      4.2
     ]
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "close",
@@ -151,7 +157,8 @@
    "fala": [
     "davi",
     "Deve ser defeito da câmera."
-   ]
+   ],
+   "emo": "normal"
   },
   {
    "tipo": "monitor",
@@ -161,13 +168,14 @@
    "fala": [
     "davi",
     "Mas eu acabei de vir de lá."
-   ]
+   ],
+   "emo": "medo"
   },
   {
    "tipo": "monitor",
    "vulto": "vira",
    "viraEm": 2.2,
-   "fecha": 34,
+   "fecha": 52,
    "min": 9,
    "falhas": [
     4.6,

@@ -14,7 +14,8 @@
    "fala": [
     "davi",
     "Sumiu. Foi sono. Só pode ser sono."
-   ]
+   ],
+   "emo": "cansado"
   },
   {
    "tipo": "close",
@@ -45,7 +46,8 @@
    "fala": [
     "davi",
     "Eu não passei nada."
-   ]
+   ],
+   "emo": "intriga"
   },
   {
    "tipo": "registradora",
@@ -78,7 +80,8 @@
      "bip",
      1.7
     ]
-   ]
+   ],
+   "emo": "intriga"
   },
   {
    "tipo": "dois",
@@ -98,7 +101,8 @@
      "passos",
      0.6
     ]
-   ]
+   ],
+   "emo": "normal"
   },
   {
    "tipo": "close",
@@ -115,7 +119,8 @@
    "fala": [
     "jair",
     "Seu colega não vai me atender, não? Tá ali parado no fundo."
-   ]
+   ],
+   "emo": "normal"
   },
   {
    "tipo": "close",
@@ -137,7 +142,8 @@
      0.3,
      -4
     ]
-   ]
+   ],
+   "emo": "medo"
   },
   {
    "tipo": "close",
@@ -175,7 +181,8 @@
      "sino",
      5.4
     ]
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "pov_anda",
@@ -205,7 +212,8 @@
      0.4
     ]
    ],
-   "luz": "meia"
+   "luz": "meia",
+   "emo": "medo"
   },
   {
    "tipo": "registradora",

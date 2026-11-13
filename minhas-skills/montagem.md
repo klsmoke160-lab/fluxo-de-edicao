@@ -55,5 +55,11 @@ Fase atual: 3 (referências e perfil) · Atualizado em 2026-11-12
 - HUD em etiqueta de preço amarela com relógio digital; legenda em caixa escura com o nome de quem fala.
 - História, falas e vozes iguais à v01. Entregas: `serie/turno-da-noite/entregas/turno-da-noite_epNN_v02.mp4`.
 
+## v03 (ela pediu: "melhora a voz dele, concerta todos os erros")
+- Vozes: Davi agora é a voz mais expressiva (cadu agudo); cada fala ganhou uma emoção (tom, entonação e ritmo); eco de sala curto e EQ nas vozes que não são de telefone.
+- Erros corrigidos: close do Davi na parede (EP 04) com a câmera atravessando a parede; velas do EP 02 que viravam faixas amarelas; zoom do monitor que cortava o relógio (EP 01 e 03); volume diferente entre os episódios (loudnorm).
+- Tentativa que não passou: baixar o Kokoro (voz mais natural, com voz feminina) foi bloqueado pela permissão do ambiente. Fica como opção, se ela autorizar.
+- Entregas: `serie/turno-da-noite/entregas/turno-da-noite_epNN_v03.mp4`.
+
 ## Próximo passo
-Ela assiste aos 4 episódios v02 e pede as correções (voz, ritmo, visual). Eu não ouvi o áudio nem assisti ao movimento: conferi por quadros parados e por medições.
+Ela assiste aos 4 episódios v03 e pede as correções. Eu não ouvi o áudio: as vozes foram medidas (tom, variação, limpeza), não escutadas.

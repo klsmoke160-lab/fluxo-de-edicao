@@ -10,15 +10,32 @@ import hashlib, json, os, subprocess, sys
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 FPS = 30
 SR = 44100
-VERSAO = "v02"
+VERSAO = "v03"
 
 # Voz de cada personagem: modelo do Piper, ritmo (maior = mais devagar), tom (maior = mais agudo).
 VOZES = {
-    "davi":  dict(modelo="pt_BR-faber-medium", ritmo=1.0,  tom=1.06, telefone=False),
-    "osmar": dict(modelo="pt_BR-jeff-medium",  ritmo=1.1,  tom=0.94, telefone=True),
-    "jair":  dict(modelo="pt_BR-cadu-medium",  ritmo=0.95, tom=0.98, telefone=False),
+    # Davi (19 anos): a voz mais expressiva das três e um pouco mais aguda
+    "davi":  dict(modelo="pt_BR-cadu-medium",  ritmo=0.97, tom=1.10, telefone=False),
+    # Seu Osmar (dono, mais velho, calmo): vai pelo telefone
+    "osmar": dict(modelo="pt_BR-jeff-medium",  ritmo=1.08, tom=0.94, telefone=True),
+    # Seu Jair (taxista, mais velho): mais grave
+    "jair":  dict(modelo="pt_BR-faber-medium", ritmo=1.04, tom=0.88, telefone=False),
 }
 ALVO_VOZ_DB = -19.0  # volume médio de cada fala
+
+# Emoção de cada fala: desloca o tom (semitons), amplia a entonação (1 = como veio), muda o ritmo
+# (maior = mais devagar) e o volume (dB). Aplicado com o Praat, antes do filtro de personagem.
+EMOCOES = {
+    "normal":  dict(tom=0.0,  contorno=1.25, ritmo=1.00, db=0.0),
+    "leve":    dict(tom=0.5,  contorno=1.40, ritmo=0.98, db=0.0),   # brincando, à vontade
+    "cansado": dict(tom=-1.0, contorno=1.00, ritmo=1.08, db=-1.5),
+    "intriga": dict(tom=1.0,  contorno=1.40, ritmo=1.00, db=0.0),   # estranhando
+    "alegre":  dict(tom=1.5,  contorno=1.45, ritmo=0.96, db=0.5),   # simpatia forçada
+    "tenso":   dict(tom=-1.0, contorno=1.10, ritmo=1.10, db=-1.5),  # baixo, devagar, contido
+    "medo":    dict(tom=1.5,  contorno=1.30, ritmo=0.95, db=0.0),
+    "susto":   dict(tom=2.5,  contorno=1.45, ritmo=0.90, db=2.0),
+    "calmo":   dict(tom=0.0,  contorno=1.10, ritmo=1.04, db=-0.5),
+}
 
 # Efeitos sonoros sintetizados (expressões do aevalsrc do FFmpeg): nome -> (expressão, duração, filtro extra)
 SFX = {
@@ -54,23 +71,57 @@ def volume_medio(arq):
     raise RuntimeError("sem volume: " + arq)
 
 
-def gerar_fala(quem, texto, pasta):
+def aplicar_emocao(entrada, saida, emo):
+    """Muda tom, entonação e ritmo da fala com o Praat (PSOLA), sem mexer no timbre."""
+    import numpy as np, parselmouth
+    from parselmouth.praat import call
+    snd = parselmouth.Sound(entrada)
+    manip = call(snd, "To Manipulation", 0.01, 70, 350)
+    pt = call(manip, "Extract pitch tier")
+    n = call(pt, "Get number of points")
+    if n < 3:
+        snd.save(saida, "WAV"); return
+    tempos = np.array([call(pt, "Get time from index", i) for i in range(1, n + 1)])
+    freqs = np.array([call(pt, "Get value at index", i) for i in range(1, n + 1)])
+    med = float(np.median(freqs))
+    novo = call("Create PitchTier", "novo", snd.xmin, snd.xmax)
+    for t, f in zip(tempos, freqs):
+        st = 12 * np.log2(f / med) * emo["contorno"] + emo["tom"]
+        call(novo, "Add point", float(t), float(med * 2 ** (st / 12)))
+    call([manip, novo], "Replace pitch tier")
+    dur = call("Create DurationTier", "dur", snd.xmin, snd.xmax)
+    call(dur, "Add point", snd.xmin, emo["ritmo"])
+    call(dur, "Add point", snd.xmax, emo["ritmo"])
+    call([manip, dur], "Replace duration tier")
+    out = call(manip, "Get resynthesis (overlap-add)")
+    out.scale_peak(0.95)
+    out.save(saida, "WAV")
+
+
+def gerar_fala(quem, texto, pasta, emo="normal"):
     v = VOZES[quem]
-    chave = hashlib.sha1(json.dumps([quem, texto, v], sort_keys=True).encode()).hexdigest()[:12]
+    e = EMOCOES[emo]
+    chave = hashlib.sha1(json.dumps([quem, texto, v, emo, e, "p2"], sort_keys=True).encode()).hexdigest()[:12]
     final = os.path.join(pasta, f"{quem}_{chave}.wav")
     if os.path.exists(final):
         return final
-    bruto, tratado = final + ".bruto.wav", final + ".tratado.wav"
+    bruto, emocionado, tratado = final + ".bruto.wav", final + ".emo.wav", final + ".tratado.wav"
     modelo = os.path.join(RAIZ, "vozes-modelos", v["modelo"] + ".onnx")
     subprocess.run([sys.executable, "-m", "piper", "-m", modelo, "-f", bruto, "--length-scale", str(v["ritmo"]), "--sentence-silence", "0.28"],
                    input=texto, text=True, check=True, capture_output=True)
+    aplicar_emocao(bruto, emocionado, e)
     filtros = [f"asetrate=22050*{v['tom']}", f"aresample={SR}", f"atempo={1 / v['tom']:.5f}"]
     if v["telefone"]:
         filtros += ["highpass=f=380", "lowpass=f=3000", "acompressor=threshold=-22dB:ratio=4"]
-    sh(["ffmpeg", "-v", "error", "-y", "-i", bruto, "-af", ",".join(filtros), "-ac", "1", tratado])
-    ganho = ALVO_VOZ_DB - volume_medio(tratado)
+    else:
+        # voz "no ar" da loja: calor nos graves, presença nas consoantes, compressão leve e uma sala bem curta
+        filtros += ["highpass=f=70", "equalizer=f=220:t=q:w=1:g=1.5", "equalizer=f=3200:t=q:w=1:g=2.5",
+                    "acompressor=threshold=-24dB:ratio=2.5:attack=8:release=120", "aecho=0.88:0.9:28|55:0.10|0.06"]
+    sh(["ffmpeg", "-v", "error", "-y", "-i", emocionado, "-af", ",".join(filtros), "-ac", "1", tratado])
+    ganho = ALVO_VOZ_DB + e["db"] - volume_medio(tratado)
     sh(["ffmpeg", "-v", "error", "-y", "-i", tratado, "-af", f"volume={ganho:.2f}dB,alimiter=limit=0.9", "-ac", "1", final])
-    os.remove(bruto); os.remove(tratado)
+    for f in (bruto, emocionado, tratado):
+        os.remove(f)
     return final
 
 
@@ -87,7 +138,7 @@ def cmd_vozes(ep):
         voz = None
         dur = s.get("min", 2.5)
         if "fala" in s:
-            arq = gerar_fala(s["fala"][0], s["fala"][1], falas)
+            arq = gerar_fala(s["fala"][0], s["fala"][1], falas, s.get("emo", "normal"))
             dv = duracao(arq)
             pre = s.get("pre", 0.35)
             dur = max(dur, pre + dv + s.get("pos", 0.55))
@@ -134,7 +185,7 @@ def cmd_audio(ep):
             quando = (x["fim"] + u) if u < 0 else (x["ini"] + u)
             entradas += ["-i", gerar_sfx(nome)]
             grafo.append(f"[{n}:a]volume={ganho}dB,adelay={int(max(0, quando) * 1000)}:all=1[a{n}]"); rotulos.append(f"[a{n}]"); n += 1
-    grafo.append("".join(rotulos) + f"amix=inputs={len(rotulos)}:normalize=0:duration=longest,atrim=0:{D},volume=3dB,alimiter=limit=0.8:level=disabled,aresample={SR}[mix]")
+    grafo.append("".join(rotulos) + f"amix=inputs={len(rotulos)}:normalize=0:duration=longest,atrim=0:{D},alimiter=limit=0.9:level=disabled,loudnorm=I=-15:TP=-1.5:LRA=9,aresample={SR}[mix]")
     os.makedirs(os.path.join(RAIZ, "entregas"), exist_ok=True)
     saida = os.path.join(RAIZ, "entregas", f"turno-da-noite_{ep}_{VERSAO}.mp4")
     sh(["ffmpeg", "-v", "error", "-y", *entradas, "-filter_complex", ";".join(grafo), "-map", "0:v", "-map", "[mix]",

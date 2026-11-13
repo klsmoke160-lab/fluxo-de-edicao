@@ -50,7 +50,8 @@
     "davi",
     "Seu Osmar, desculpa a hora. Tem alguém na loja. No corredor três."
    ],
-   "legenda": "Seu Osmar, desculpa a hora. Tem alguém na loja. No corredor 3."
+   "legenda": "Seu Osmar, desculpa a hora. Tem alguém na loja. No corredor 3.",
+   "emo": "medo"
   },
   {
    "tipo": "celular",
@@ -63,7 +64,8 @@
     "osmar",
     "Davi... que corredor três?"
    ],
-   "legenda": "Davi... que corredor 3?"
+   "legenda": "Davi... que corredor 3?",
+   "emo": "normal"
   },
   {
    "tipo": "close",
@@ -83,7 +85,8 @@
     "davi",
     "O do fundo. O da câmera três."
    ],
-   "legenda": "O do fundo. O da câmera 3."
+   "legenda": "O do fundo. O da câmera 3.",
+   "emo": "tenso"
   },
   {
    "tipo": "celular",
@@ -95,7 +98,8 @@
    "fala": [
     "osmar",
     "Filho, a loja tem dois corredores. Sempre teve dois. Fui eu que montei as prateleiras."
-   ]
+   ],
+   "emo": "calmo"
   },
   {
    "tipo": "placa",
@@ -112,7 +116,8 @@
      0.2,
      -5
     ]
-   ]
+   ],
+   "emo": "medo"
   },
   {
    "tipo": "celular",
@@ -131,7 +136,8 @@
      "chiado",
      3.0
     ]
-   ]
+   ],
+   "emo": "susto"
   },
   {
    "tipo": "close",
@@ -156,7 +162,8 @@
      "desligado",
      0.0
     ]
-   ]
+   ],
+   "emo": "susto"
   },
   {
    "tipo": "celular",
@@ -173,13 +180,14 @@
      "impacto",
      0.5
     ]
-   ]
+   ],
+   "emo": "susto"
   },
   {
    "tipo": "monitor",
    "vulto": "perto",
    "apaga": 4.0,
-   "fecha": 36,
+   "fecha": 52,
    "min": 9.5,
    "falhas": [
     1.2,

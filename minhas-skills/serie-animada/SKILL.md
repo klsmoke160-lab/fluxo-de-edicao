@@ -47,7 +47,12 @@ Uma cena que não cabe nesses tipos pede um tipo novo em `TOMADAS`, no `motor.js
 - **Texto em placa dos dois lados aparece espelhado.** Use dois planos, um para cada face.
 - **Câmera de close atravessa objetos.** Confira o ângulo (`camAng`) em cada lugar novo; no caixa a registradora some no close.
 - **Lanterna perto de parede estoura o branco.** Baixe a intensidade quando a parede está a menos de 3 m.
-- **O Piper só tem vozes masculinas em pt-BR.** Personagem feminina precisa de outro serviço de voz.
+- **O Piper só tem vozes masculinas em pt-BR.** Personagem feminina precisa de outro serviço de voz (o Kokoro tem `pf_dora`, mas o download do modelo precisa de permissão).
+- **Cada fala tem uma emoção** (`"emo"` na tomada): normal, leve, cansado, intriga, alegre, tenso, medo, susto, calmo. Elas mudam tom, entonação e ritmo com o Praat (parselmouth). Ao escrever uma fala nova, escolha a emoção. Medido: a variação de tom do Davi subiu de ~2,7 para ~4,0 semitons, sem perda de limpeza (HNR igual).
+- **Voz de cada personagem** (em `VOZES`, no `montar.py`): Davi = cadu agudo (a mais expressiva), Seu Osmar = jeff com filtro de telefone, Seu Jair = faber grave.
+- **Câmera de close atravessa parede.** Parede nova (EP 04) deixa o rosto impossível de enquadrar de frente: use plano por cima do ombro ou de lado (`camAng` ~1,35 e `dist` 2,2 no lugar `parede`).
+- **Zoom no monitor corta o relógio e esbarra no HUD.** Não passe de `fecha` 52 graus abaixo disso; abaixo de ~48 o texto da câmera é cortado.
+- **Volume entre episódios:** a mixagem termina com `loudnorm` (I=-15). Sem ele, os episódios saem com volumes diferentes.
 - **Número falado e número escrito.** Na fala escreva "três"; na legenda, "3".
 - **O detector de cortes do FFmpeg falha em cena escura.** Não confie nele para contar cortes de referência.
 - **Não apague arquivos por comando com curinga depois de mudar de pasta.** Use uma pasta nova para cada conferência.

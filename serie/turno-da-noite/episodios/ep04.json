@@ -23,7 +23,8 @@
    "fala": [
     "davi",
     "Tá. Conta, Davi. Só conta."
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "lanterna",
@@ -40,7 +41,8 @@
      "passos",
      0.2
     ]
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "lanterna",
@@ -57,7 +59,8 @@
      "passos",
      0.2
     ]
-   ]
+   ],
+   "emo": "tenso"
   },
   {
    "tipo": "lanterna",
@@ -79,41 +82,50 @@
      "impacto",
      3.0
     ]
-   ]
+   ],
+   "emo": "medo"
   },
   {
    "tipo": "close",
    "lugar": "parede",
    "maoParede": true,
-   "camAng": 1.9,
    "min": 5.6,
    "pre": 1.4,
    "fala": [
     "davi",
     "Tinha um corredor aqui. Eu andei nele."
-   ]
+   ],
+   "emo": "medo",
+   "camAng": 1.35,
+   "dist": 2.2,
+   "cabeca": [
+    -0.1,
+    -1.1
+   ],
+   "vira": 0.5
   },
   {
    "tipo": "close",
    "lugar": "parede",
-   "camAng": 1.9,
-   "cabeca": [
-    0,
-    -1.1
-   ],
-   "torce": -0.9,
-   "susto": [
-    0.2,
-    0.8
-   ],
-   "vira": 1.0,
    "min": 3.6,
    "sfx": [
     [
      "bip",
      0.9
     ]
-   ]
+   ],
+   "camAng": 0.3,
+   "dist": 2.2,
+   "cabeca": [
+    0,
+    0
+   ],
+   "torce": -3.0,
+   "susto": [
+    0.2,
+    0.9
+   ],
+   "vira": 0.8
   },
   {
    "tipo": "pov_anda",
@@ -163,7 +175,8 @@
      "estatica",
      8.6
     ]
-   ]
+   ],
+   "emo": "susto"
   },
   {
    "tipo": "close",
@@ -187,7 +200,8 @@
     "davi",
     "Não tem ninguém."
    ],
-   "legenda": "...Não tem ninguém."
+   "legenda": "...Não tem ninguém.",
+   "emo": "tenso"
   },
   {
    "tipo": "campainha",

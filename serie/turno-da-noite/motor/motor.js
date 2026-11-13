@@ -131,7 +131,7 @@ function gondola(x, lados) {
     box(0.26, 0.03, 6, prat, x + s * 0.36, y, -3);
     const noC3 = Math.abs(x + s * 0.37 - 2.9) < 1.2;
     for (let z = -5.85; z < -0.1; z += 0.27) {
-      if (noC3) for (const dz of [0, 0.09, 0.18]) velasPos.push({ x: x + s * 0.37, y: y + 0.015 + 0.11, z: z + dz });
+      if (noC3) for (const dz of [0.02, 0.2]) velasPos.push({ x: x + s * 0.37, y: y + 0.015 + 0.13, z: z + dz });
       if (r1() < 0.07) continue;
       const w = 0.15 + r1() * 0.07, h = 0.16 + r1() * 0.16, d = 0.16 + r1() * 0.07;
       (noC3 ? prodsC3 : prodsGeral).push({ x: x + s * 0.37, y: y + 0.015 + h / 2, z: z + r1() * 0.04, w, h, d, c: prodPaleta[Math.floor(r1() * prodPaleta.length)] });
@@ -155,9 +155,15 @@ function instanciar(lista) {
 }
 instanciar(prodsGeral);
 const instC3 = instanciar(prodsC3);
-const instVelas = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.032, 0.032, 0.2, 10), L(0xefe6cf), velasPos.length);
-const instChamas = new THREE.InstancedMesh(new THREE.SphereGeometry(0.022, 8, 8), B(0xffc24d), velasPos.length);
-{ const m = new THREE.Matrix4(); velasPos.forEach((p, i) => { m.makeTranslation(p.x, p.y - 0.01, p.z); instVelas.setMatrixAt(i, m); m.makeScale(1, 1.7, 1).setPosition(p.x, p.y + 0.125, p.z); instChamas.setMatrixAt(i, m); }); scene.add(instVelas); scene.add(instChamas); }
+const instVelas = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.04, 0.04, 0.26, 12), L(0xf6efd9), velasPos.length);
+const instChamas = new THREE.InstancedMesh(new THREE.SphereGeometry(0.03, 10, 10), B(0xfff0a8), velasPos.length);
+const instBrilho = new THREE.InstancedMesh(new THREE.SphereGeometry(0.06, 10, 10), new THREE.MeshBasicMaterial({ color: 0xff9a2e, transparent: true, opacity: 0.22, blending: THREE.AdditiveBlending, depthWrite: false }), velasPos.length);
+{ const m = new THREE.Matrix4(); velasPos.forEach((p, i) => {
+  m.makeTranslation(p.x, p.y, p.z); instVelas.setMatrixAt(i, m);
+  m.makeScale(1, 2.3, 1).setPosition(p.x, p.y + 0.18, p.z); instChamas.setMatrixAt(i, m);
+  m.makeTranslation(p.x, p.y + 0.18, p.z); instBrilho.setMatrixAt(i, m);
+}); scene.add(instVelas); scene.add(instChamas); scene.add(instBrilho); }
+const luzVela = new THREE.PointLight(0xff9a3c, 8, 0, 1.4); luzVela.position.set(2.9, 1.5, -2.5); luzVela.userData.base = 0; scene.add(luzVela); luz.vela = luzVela;
 
 const placas = {};
 function placa(n, x) {
@@ -182,7 +188,7 @@ box(2.9, 3, 7.1, parede, 3.4, 1.5, -3.5, paredeNova); box(2.9, 0.5, 0.04, faixa,
 scene.add(paredeNova);
 function setLayout({ c3 = true, velas = false } = {}) {
   paredeNova.visible = !c3; placas[3].visible = c3;
-  instC3.visible = !velas; instVelas.visible = velas; instChamas.visible = velas;
+  instC3.visible = !velas; instVelas.visible = velas; instChamas.visible = velas; instBrilho.visible = velas; luzVela.userData.base = velas ? 8 : 0;
 }
 
 // Balcão, registradora, cupom, campainha, monitor

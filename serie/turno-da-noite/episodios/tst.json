@@ -1,0 +1,55 @@
+{
+ "id": "tst",
+ "hud": [
+  "TURNO DA NOITE · EP 04",
+  "TERÇA · 03:12"
+ ],
+ "luz": "meia",
+ "layout": {
+  "c3": false
+ },
+ "tomadas": [
+  {
+   "tipo": "close",
+   "lugar": "parede",
+   "min": 3.6,
+   "luz": "meia",
+   "maoParede": true,
+   "vira": 0.5,
+   "cabeca": [
+    -0.1,
+    -1.1
+   ],
+   "camAng": 1.35,
+   "dist": 2.2
+  },
+  {
+   "tipo": "close",
+   "lugar": "parede",
+   "min": 3.6,
+   "luz": "meia",
+   "maoParede": true,
+   "vira": 0.5,
+   "cabeca": [
+    -0.1,
+    -1.2
+   ],
+   "camAng": 1.0,
+   "dist": 2.2
+  },
+  {
+   "tipo": "close",
+   "lugar": "parede",
+   "min": 3.6,
+   "luz": "meia",
+   "maoParede": true,
+   "vira": 0.5,
+   "cabeca": [
+    -0.1,
+    -1.0
+   ],
+   "camAng": 1.6,
+   "dist": 2.2
+  }
+ ]
+}
